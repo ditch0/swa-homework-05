@@ -1,0 +1,4 @@
+FROM openjdk:11-jre-slim
+COPY build/libs/app.jar app.jar
+EXPOSE 8000
+CMD ["java", "-jar", "app.jar", "--server.port=8000"]
