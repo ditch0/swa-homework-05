@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: swa05-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: swa05-app
+  template:
+    metadata:
+      labels:
+        app: swa05-app
+    spec:
+      containers:
+        - name: swa05-app
+          image: ditch0/swa05:v1
+          ports:
+            - name: web
+              containerPort: 8000
+          livenessProbe:
+            httpGet:
+              port: 8000
+              path: /health
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet:
+              port: 8000
+              path: /health
+            initialDelaySeconds: 10
+            periodSeconds: 5
